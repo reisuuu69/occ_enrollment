@@ -1,0 +1,71 @@
+
+=== EMAIL LOG ENTRY ===
+Timestamp: 2025-08-29 21:22:33
+To: shuuyagreat@gmail.com
+Subject: Entrance Exam Schedule - OCC Enrollment System
+From: OCC Enrollment System <noreply@occ.edu.ph>
+Reply-To: registrar@occ.edu.ph
+
+Message:
+
+        <html>
+        <head>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+                .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+                .exam-details { background: white; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #667eea; }
+                .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h2>OCC Enrollment System</h2>
+                    <p>Entrance Exam Schedule</p>
+                </div>
+                <div class='content'>
+                    <h3>Hello asd asd,</h3>
+                    <p>Congratulations! Your enrollment application has been verified and approved. We have scheduled your entrance exam as follows:</p>
+                    
+                    <div class='exam-details'>
+                        <h4>📅 Exam Details:</h4>
+                        <p><strong>Date:</strong> August 31, 2025</p>
+                        <p><strong>Time:</strong> 06:00 PM</p>
+                        <p><strong>Venue:</strong> OCC Campus</p>
+                    </div>
+                    
+                    <h4>📋 What to Bring:</h4>
+                    <ul>
+                        <li>Valid ID (School ID, Government ID, or Birth Certificate)</li>
+                        <li>2x2 ID Picture (2 copies)</li>
+                        <li>Ballpen and Pencil</li>
+                        <li>Calculator (if needed)</li>
+                    </ul>
+                    
+                    <h4>⚠️ Important Reminders:</h4>
+                    <ul>
+                        <li>Please arrive 30 minutes before the scheduled time</li>
+                        <li>Dress appropriately and comfortably</li>
+                        <li>Bring your own snacks and water</li>
+                        <li>Mobile phones and other electronic devices are not allowed during the exam</li>
+                    </ul>
+                    
+                    <p>If you have any questions or need to reschedule, please contact the registrar's office immediately.</p>
+                    
+                    <p>Good luck on your entrance exam!</p>
+                    
+                    <p>Best regards,<br>
+                    OCC Enrollment Team</p>
+                </div>
+                <div class='footer'>
+                    <p>This is an automated message. Please do not reply to this email.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        
+
+=== END EMAIL ===
+

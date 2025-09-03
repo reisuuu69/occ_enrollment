@@ -1,0 +1,75 @@
+USE occ_enrollment;
+
+DROP TABLE IF EXISTS old_students;
+
+CREATE TABLE old_students (
+    student_id VARCHAR(20) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    firstname VARCHAR(50) NOT NULL,
+    middlename VARCHAR(50),
+    course VARCHAR(10) NOT NULL,
+    year_level INT NOT NULL,
+    section VARCHAR(5) NOT NULL,
+    current_semester INT NOT NULL,
+    school_year VARCHAR(20) NOT NULL,
+    units_earned INT NOT NULL DEFAULT 0,
+    gpa DECIMAL(3,2),
+    status VARCHAR(20) DEFAULT 'Regular',
+    email VARCHAR(100) NOT NULL,
+    lrn VARCHAR(20) NOT NULL,
+    address TEXT NOT NULL,
+    gender CHAR(1) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    age INT NOT NULL,
+    civil_status VARCHAR(20) NOT NULL,
+    contact_no VARCHAR(20) NOT NULL,
+    last_school VARCHAR(100) NOT NULL,
+    school_address TEXT NOT NULL,
+    strand VARCHAR(50) NOT NULL,
+    preferred_program VARCHAR(20) NOT NULL,
+    is_working CHAR(1) NOT NULL DEFAULT 'N',
+    employer VARCHAR(100),
+    position VARCHAR(100),
+    working_hours VARCHAR(50),
+    preferred_schedule VARCHAR(20) NOT NULL,
+    father_name VARCHAR(100) NOT NULL,
+    father_occupation VARCHAR(100),
+    father_contact VARCHAR(20),
+    num_brothers INT DEFAULT 0,
+    family_income DECIMAL(10,2) NOT NULL,
+    mother_name VARCHAR(100) NOT NULL,
+    mother_occupation VARCHAR(100),
+    mother_contact VARCHAR(20),
+    num_sisters INT DEFAULT 0,
+    guardian_name VARCHAR(100) NOT NULL,
+    guardian_contact VARCHAR(20) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (student_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Insert sample data
+INSERT INTO old_students (
+    student_id, lastname, firstname, middlename, course, year_level, section, 
+    current_semester, school_year, units_earned, gpa, email, lrn, address, 
+    gender, date_of_birth, age, civil_status, contact_no, last_school, 
+    school_address, strand, preferred_program, is_working, preferred_schedule,
+    father_name, father_occupation, father_contact, family_income,
+    mother_name, mother_contact, guardian_name, guardian_contact,
+    username, password
+) VALUES
+('2022-0001', 'Santos', 'Juan', 'Dela Cruz', 'BSCS', 2, 'A', 1, '2023-2024', 36, 1.75, 
+'juan.santos@email.com', '123456789012', 'Sample Address 1', 'M', '2003-05-15', 20, 
+'Single', '09123456789', 'Previous School 1', 'School Address 1', 'STEM', 'BSCS', 'N', 
+'Morning', 'Pedro Santos', 'Engineer', '09111111111', 25000.00, 'Maria Santos', 
+'09222222222', 'Pedro Santos', '09111111111',
+'juan2022', '$2y$10$6qM3m2C5YHPSz.zQT9Q4Q.YGK0uAXqX8x9Wd3nR.UO28OI0IxM0c2'),
+
+('2022-0002', 'Reyes', 'Ana', 'Martinez', 'BSE', 3, 'B', 1, '2023-2024', 72, 1.50, 
+'ana.reyes@email.com', '123456789013', 'Sample Address 2', 'F', '2002-08-20', 21, 
+'Single', '09234567890', 'Previous School 2', 'School Address 2', 'HUMSS', 'BSE', 'N', 
+'Morning', 'Jose Reyes', 'Teacher', '09333333333', 30000.00, 'Carmen Reyes', 
+'09444444444', 'Jose Reyes', '09333333333',
+'ana2022', '$2y$10$6qM3m2C5YHPSz.zQT9Q4Q.YGK0uAXqX8x9Wd3nR.UO28OI0IxM0c2');
