@@ -14,6 +14,16 @@ $pdo = $database->connect();
 $message = '';
 $error = '';
 
+// Flash messages (PRG)
+if (isset($_SESSION['flash_message'])) {
+    $message = $_SESSION['flash_message'];
+    unset($_SESSION['flash_message']);
+}
+if (isset($_SESSION['flash_error'])) {
+    $error = $_SESSION['flash_error'];
+    unset($_SESSION['flash_error']);
+}
+
 // Handle form submissions
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['action'])) {
@@ -28,9 +38,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_POST['building'],
                         $_POST['floor']
                     ]);
-                    $message = "Room added successfully!";
+                    $_SESSION['flash_message'] = "Room added successfully!";
+                    header('Location: manage_rooms.php');
+                    exit();
                 } catch (PDOException $e) {
-                    $error = "Error adding room: " . $e->getMessage();
+                    $_SESSION['flash_error'] = "Error adding room: " . $e->getMessage();
+                    header('Location: manage_rooms.php');
+                    exit();
                 }
                 break;
 
@@ -45,9 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_POST['floor'],
                         $_POST['room_id']
                     ]);
-                    $message = "Room updated successfully!";
+                    $_SESSION['flash_message'] = "Room updated successfully!";
+                    header('Location: manage_rooms.php');
+                    exit();
                 } catch (PDOException $e) {
-                    $error = "Error updating room: " . $e->getMessage();
+                    $_SESSION['flash_error'] = "Error updating room: " . $e->getMessage();
+                    header('Location: manage_rooms.php');
+                    exit();
                 }
                 break;
 
@@ -55,9 +73,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 try {
                     $stmt = $pdo->prepare("DELETE FROM rooms WHERE room_id = ?");
                     $stmt->execute([$_POST['room_id']]);
-                    $message = "Room deleted successfully!";
+                    $_SESSION['flash_message'] = "Room deleted successfully!";
+                    header('Location: manage_rooms.php');
+                    exit();
                 } catch (PDOException $e) {
-                    $error = "Error deleting room: " . $e->getMessage();
+                    $_SESSION['flash_error'] = "Error deleting room: " . $e->getMessage();
+                    header('Location: manage_rooms.php');
+                    exit();
                 }
                 break;
         }
@@ -98,108 +120,120 @@ try {
     <title>Manage Rooms - OCC Enrollment System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .sidebar {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .sidebar .nav-link {
-            color: rgba(255,255,255,0.8);
-            padding: 12px 20px;
-            margin: 5px 0;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-        .sidebar .nav-link:hover, .sidebar .nav-link.active {
-            color: white;
-            background: rgba(255,255,255,0.1);
-            transform: translateX(5px);
-        }
-        .main-content {
-            background: #f8f9fa;
-            min-height: 100vh;
-        }
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-        }
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        .stat-card .icon {
-            font-size: 2.5rem;
-            opacity: 0.8;
-        }
-        .btn-custom {
-            border-radius: 25px;
-            padding: 8px 20px;
-            font-weight: 500;
-        }
-    </style>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 px-0">
-                <div class="sidebar p-3">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="../includes/modern-dashboard.css" rel="stylesheet">
+
+</head>`n<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4><i class="fas fa-clipboard-list"></i> Registrar Panel</h4>
+            <p>OCC Enrollment System</p>
+        </div>
+        
+        <nav class="sidebar-nav">
                     <div class="text-center mb-4">
                         <h4 class="text-white">Registrar Panel</h4>
                         <p class="text-white-50 small">OCC Enrollment System</p>
                     </div>
                     
-                    <nav class="nav flex-column">
-                        <a class="nav-link" href="dashboard.php">
-                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
-                        </a>
-                        <a class="nav-link" href="manage_students.php">
-                            <i class="fas fa-user-graduate me-2"></i> Manage Students
-                        </a>
-                        <a class="nav-link" href="manage_faculty.php">
-                            <i class="fas fa-chalkboard-teacher me-2"></i> Manage Faculty
-                        </a>
-                        <a class="nav-link" href="manage_course.php">
-                            <i class="fas fa-book me-2"></i> Course Management
-                        </a>
-                        <a class="nav-link" href="manage_subjects.php">
-                            <i class="fas fa-file-alt me-2"></i> Subject Management
-                        </a>
-                        <a class="nav-link" href="manage_sections.php">
-                            <i class="fas fa-layer-group me-2"></i> Section Management
-                        </a>
-                        <a class="nav-link" href="manage_schedules.php">
-                            <i class="fas fa-calendar-alt me-2"></i> Schedule Management
-                        </a>
-                        <a class="nav-link active" href="manage_rooms.php">
-                            <i class="fas fa-building me-2"></i> Room Management
-                        </a>
-                        <a class="nav-link" href="manage_users.php">
-                            <i class="fas fa-users me-2"></i> Manage Users
-                        </a>
-                        <a class="nav-link" href="assignments.php">
-                            <i class="fas fa-tasks me-2"></i> Assignments
-                        </a>
-                        <a class="nav-link" href="reports.php">
-                            <i class="fas fa-chart-bar me-2"></i> Reports
-                        </a>
+                    <nav class="sidebar-nav">
+                        <div class="nav-item">
+                <a class="nav-link" href="dashboard.php">
+                    <i class="fas fa-tachometer-alt me-2"></i>
+                    Dashboard
+                        
+                </a>
+            </div>
+                        <div class="nav-item">
+                <a class="nav-link" href="manage_students.php">
+                    <i class="fas fa-user-graduate me-2"></i>
+                    Manage Students
+                        
+                </a>
+            </div>
+                        <div class="nav-item">
+                <a class="nav-link" href="manage_faculty.php">
+                    <i class="fas fa-chalkboard-teacher me-2"></i>
+                    Manage Faculty
+                        
+                </a>
+            </div>
+                        <div class="nav-item">
+                <a class="nav-link" href="manage_course.php">
+                    <i class="fas fa-book me-2"></i>
+                    Course Management
+                        
+                </a>
+            </div>
+                        <div class="nav-item">
+                <a class="nav-link" href="manage_subjects.php">
+                    <i class="fas fa-file-alt me-2"></i>
+                    Subject Management
+                        
+                </a>
+            </div>
+                        <div class="nav-item">
+                <a class="nav-link" href="manage_sections.php">
+                    <i class="fas fa-layer-group me-2"></i>
+                    Section Management
+                        
+                </a>
+            </div>
+                        <div class="nav-item">
+                <a class="nav-link" href="manage_schedules.php">
+                    <i class="fas fa-calendar-alt me-2"></i>
+                    Schedule Management
+                        
+                </a>
+            </div>
+                        <div class="nav-item">
+                <a class="nav-link active" href="manage_rooms.php">
+                    <i class="fas fa-building me-2"></i>
+                    Room Management
+                        
+                </a>
+            </div>
+                        <div class="nav-item">
+                <a class="nav-link" href="manage_users.php">
+                    <i class="fas fa-users me-2"></i>
+                    Manage Users
+                        
+                </a>
+            </div>
+                        <div class="nav-item">
+                <a class="nav-link" href="assignments.php">
+                    <i class="fas fa-tasks me-2"></i>
+                    Assignments
+                        
+                </a>
+            </div>
+                        <div class="nav-item">
+                <a class="nav-link" href="reports.php">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Reports
+                        
+                </a>
+            </div>
                         
                         <hr class="text-white-50">
-                        <a class="nav-link" href="logout.php">
-                            <i class="fas fa-sign-out-alt me-2"></i> Logout
-                        </a>
-                    </nav>
-                </div>
+                        <div class="nav-item">
+                <a class="nav-link" href="logout.php">
+                    <i class="fas fa-sign-out-alt me-2"></i>
+                    Logout
+                        
+                </a>
             </div>
+                    </nav>
+    </div>
 
-            <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 px-4 py-3">
-                <div class="main-content">
+    <!-- Main Content -->
+    <div class="main-content">
                     <!-- Header -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
@@ -545,6 +579,34 @@ try {
             location.reload();
         }, 2000);
         <?php endif; ?>
+    </script>
+
+    <script>
+        // Mobile sidebar toggle functionality
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('show');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(event.target) && 
+                !toggle.contains(event.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('show');
+            }
+        });
     </script>
 </body>
 </html>

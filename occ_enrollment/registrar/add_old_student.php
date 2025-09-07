@@ -133,110 +133,8 @@ $courses = $courses_stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Old Student</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; display: flex; }
-        .sidenav {
-            width: 250px;
-            height: 100vh;
-            background: #333;
-            padding: 20px 0;
-            position: fixed;
-        }
-        .sidenav h2 {
-            color: white;
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 0 20px;
-        }
-        .sidenav a {
-            display: block;
-            color: white;
-            padding: 15px 20px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .sidenav a:hover { background: #444; }
-        .sidenav a.active { background: #4CAF50; }
-        .main-content {
-            flex: 1;
-            margin-left: 250px;
-            padding: 20px;
-        }
-        .form-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .form-section {
-            background: #f9f9f9;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        .form-section h3 {
-            margin-bottom: 15px;
-            color: #333;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 5px;
-        }
-        .form-row {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-        }
-        .form-group {
-            flex: 1;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .form-group textarea {
-            height: 80px;
-            resize: vertical;
-        }
-        .required {
-            color: red;
-        }
-        .btn {
-            padding: 10px 20px;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            margin-right: 10px;
-        }
-        .btn-primary { background-color: #4CAF50; }
-        .btn-secondary { background-color: #666; }
-        .btn:hover { opacity: 0.8; }
-        .message {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-        }
-        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
+    
+</head>`n<body>
     <div class="sidenav">
         <h2>OCC Registrar</h2>
         <a href="dashboard.php">Enrollment List</a>
@@ -568,6 +466,34 @@ $courses = $courses_stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             
             document.getElementById('age').value = age;
+        });
+    </script>
+
+    <script>
+        // Mobile sidebar toggle functionality
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('show');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(event.target) && 
+                !toggle.contains(event.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('show');
+            }
         });
     </script>
 </body>

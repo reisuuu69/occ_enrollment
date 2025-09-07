@@ -88,19 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Student</title>
-    <style>
-        .container { max-width: 800px; margin: 20px auto; padding: 20px; }
-        .form-section { border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; }
-        input, select { width: 100%; padding: 8px; margin-bottom: 10px; }
-        .btn { padding: 10px 20px; color: white; border: none; cursor: pointer; text-decoration: none; display: inline-block; }
-        .btn-submit { background-color: #4CAF50; }
-        .btn-back { background-color: #666; }
-        .buttons { margin-top: 20px; }
-    </style>
-</head>
-<body>
+    
+</head>`n<body>
     <div class="container">
         <h2>Add New Student</h2>
         <form method="POST">
@@ -280,5 +269,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </form>
     </div>
+
+    <script>
+        // Mobile sidebar toggle functionality
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('show');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(event.target) && 
+                !toggle.contains(event.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>

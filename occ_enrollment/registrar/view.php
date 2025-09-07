@@ -33,15 +33,8 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Details</title>
-    <style>
-        .container { max-width: 800px; margin: 20px auto; padding: 20px; }
-        .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; }
-        .field { margin-bottom: 10px; }
-        .label { font-weight: bold; }
-        .back-btn { margin-bottom: 20px; display: inline-block; }
-    </style>
-</head>
-<body>
+    
+</head>`n<body>
     <div class="container">
         <a href="dashboard.php" class="back-btn">&larr; Back to Dashboard</a>
         <h2>Student Details</h2>
@@ -186,5 +179,33 @@ if (isset($_GET['id'])) {
             </div>
         </div>
     </div>
+
+    <script>
+        // Mobile sidebar toggle functionality
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('show');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(event.target) && 
+                !toggle.contains(event.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>
