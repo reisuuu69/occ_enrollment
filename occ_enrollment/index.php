@@ -430,16 +430,13 @@
         <div class="hero-section" id="home">
             <?php if (isset($_GET['status'])): ?>
                 <div class="alert <?php 
-                    if ($_GET['status'] === 'verification_sent') echo 'alert-success';
-                    elseif ($_GET['status'] === 'verification_error') echo 'alert-warning';
+                    if ($_GET['status'] === 'registered_no_verification') echo 'alert-success';
                     elseif ($_GET['status'] === 'success') echo 'alert-success';
                     else echo 'alert-danger';
                 ?>">
                     <?php 
-                    if ($_GET['status'] === 'verification_sent') {
-                        echo "Enrollment form submitted successfully! Please check your email for a verification link to complete your application.";
-                    } elseif ($_GET['status'] === 'verification_error') {
-                        echo "Enrollment form submitted successfully! However, there was an issue sending the verification email. Please contact the registrar's office.";
+                    if ($_GET['status'] === 'registered_no_verification') {
+                        echo "Registration successful! Your account is active. You can log in now using your email and password.";
                     } elseif ($_GET['status'] === 'success') {
                         echo "Enrollment form submitted successfully! We will review your application and contact you soon.";
                     } else {

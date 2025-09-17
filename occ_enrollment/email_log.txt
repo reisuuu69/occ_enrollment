@@ -53,3 +53,113 @@ Message:
 
 === END EMAIL ===
 
+
+=== EMAIL LOG ENTRY ===
+Timestamp: 2025-09-17 10:28:32
+To: student@gmail.com
+Subject: Verify Your Enrollment Application - OCC Enrollment System
+From: OCC Enrollment System <noreply@occ.edu.ph>
+Reply-To: registrar@occ.edu.ph
+
+Message:
+
+        <html>
+        <head>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+                .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+                .btn { display: inline-block; background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+                .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h2>OCC Enrollment System</h2>
+                    <p>Email Verification Required</p>
+                </div>
+                <div class='content'>
+                    <h3>Hello james sasuke,</h3>
+                    <p>Thank you for submitting your enrollment application to OCC. To complete your enrollment process, please verify your email address by clicking the button below:</p>
+                    
+                    <div style='text-align: center;'>
+                        <a href='http://localhost/occ_enrollment/verify_enrollment.php?token=4e0c0112cbc21da84a1096c9c231f769c60e8d0739bc55d8fb8b1accaff512e0' class='btn'>Verify My Enrollment</a>
+                    </div>
+                    
+                    <p><strong>Important:</strong> This verification link will expire in 24 hours. If you don't verify your email within this time, you'll need to submit your application again.</p>
+                    
+                    <p>If the button above doesn't work, you can copy and paste this link into your browser:</p>
+                    <p style='word-break: break-all; color: #667eea;'>http://localhost/occ_enrollment/verify_enrollment.php?token=4e0c0112cbc21da84a1096c9c231f769c60e8d0739bc55d8fb8b1accaff512e0</p>
+                    
+                    <p>If you didn't submit an enrollment application, please ignore this email.</p>
+                    
+                    <p>Best regards,<br>
+                    OCC Enrollment Team</p>
+                </div>
+                <div class='footer'>
+                    <p>This is an automated message. Please do not reply to this email.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        
+
+=== END EMAIL ===
+
+
+=== EMAIL LOG ENTRY ===
+Timestamp: 2025-09-17 11:00:55
+To: carljohnmacasil@gmail.com
+Subject: Verify Your Enrollment Application - OCC Enrollment System
+From: OCC Enrollment System <noreply@occ.edu.ph>
+Reply-To: registrar@occ.edu.ph
+
+Message:
+
+        <html>
+        <head>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+                .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+                .btn { display: inline-block; background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+                .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h2>OCC Enrollment System</h2>
+                    <p>Email Verification Required</p>
+                </div>
+                <div class='content'>
+                    <h3>Hello james sasuke,</h3>
+                    <p>Thank you for submitting your enrollment application to OCC. To complete your enrollment process, please verify your email address by clicking the button below:</p>
+                    
+                    <div style='text-align: center;'>
+                        <a href='http://localhost/occ_enrollment/verify_enrollment.php?token=6dd9563d286b0efe9eb0ac3b228d18fd9362d05f67a1b9f7da0809df828a0b3b' class='btn'>Verify My Enrollment</a>
+                    </div>
+                    
+                    <p><strong>Important:</strong> This verification link will expire in 24 hours. If you don't verify your email within this time, you'll need to submit your application again.</p>
+                    
+                    <p>If the button above doesn't work, you can copy and paste this link into your browser:</p>
+                    <p style='word-break: break-all; color: #667eea;'>http://localhost/occ_enrollment/verify_enrollment.php?token=6dd9563d286b0efe9eb0ac3b228d18fd9362d05f67a1b9f7da0809df828a0b3b</p>
+                    
+                    <p>If you didn't submit an enrollment application, please ignore this email.</p>
+                    
+                    <p>Best regards,<br>
+                    OCC Enrollment Team</p>
+                </div>
+                <div class='footer'>
+                    <p>This is an automated message. Please do not reply to this email.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        
+
+=== END EMAIL ===
+

@@ -313,11 +313,22 @@ $courses = $courses_stmt->fetchAll(PDO::FETCH_ASSOC);
                         <label for="email">Email Address <span class="required">*</span></label>
                         <input type="email" id="email" name="email" required>
                     </div>
+					<div class="form-group">
+						<label for="account_password">Account Password <span class="required">*</span></label>
+						<input type="password" id="account_password" name="account_password" minlength="8" required placeholder="Minimum 8 characters">
+					</div>
                     <div class="form-group">
                         <label for="lrn">LRN (Learner Reference Number) <span class="required">*</span></label>
                         <input type="text" id="lrn" name="lrn" required>
                     </div>
                 </div>
+
+				<div class="form-row">
+					<div class="form-group">
+						<label for="account_password_confirm">Confirm Password <span class="required">*</span></label>
+						<input type="password" id="account_password_confirm" name="account_password_confirm" minlength="8" required>
+					</div>
+				</div>
                 
                 <div class="form-row">
                     <div class="form-group">
@@ -528,12 +539,13 @@ $courses = $courses_stmt->fetchAll(PDO::FETCH_ASSOC);
                         <input type="text" id="guardian_contact" name="guardian_contact" required>
                     </div>
                 </div>
-                
+
                 <div class="btn-group">
                     <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
                     <button type="button" class="btn btn-primary" onclick="nextStep()">Next Step</button>
                 </div>
             </div>
+
             
             <!-- Step 4: Review and Submit -->
             <div class="form-section" id="step4">
@@ -622,6 +634,20 @@ $courses = $courses_stmt->fetchAll(PDO::FETCH_ASSOC);
                     field.style.borderColor = '#ddd';
                 }
             });
+
+			// Additional password check on step 1
+			if (currentStep === 1) {
+				const pw = document.getElementById('account_password').value;
+				const pwc = document.getElementById('account_password_confirm').value;
+				if (pw.length < 8) {
+					alert('Password must be at least 8 characters.');
+					return false;
+				}
+				if (pw !== pwc) {
+					alert('Passwords do not match.');
+					return false;
+				}
+			}
             
             if (!isValid) {
                 alert('Please fill in all required fields.');

@@ -2,6 +2,7 @@
 session_start();
 require_once 'config/database.php';
 require_once 'includes/EmailHelper.php';
+require_once 'config/database.php';
 
 $database = new Database();
 $db = $database->connect();
@@ -26,6 +27,15 @@ if (isset($_GET['token'])) {
 // Handle verification confirmation
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_verification'])) {
     try {
+        // Fetch pending enrollment including password hash
+        $fetch = $db->prepare("SELECT * FROM pending_enrollments WHERE verification_token = ? AND is_verified = 0");
+        $fetch->execute([$token]);
+        $row = $fetch->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            throw new Exception('Pending enrollment not found or already verified.');
+        }
+
         // Move from pending_enrollments to enrollees table
         $query = "INSERT INTO enrollees (
             email, lastname, firstname, middlename, lrn, address, gender,
@@ -52,6 +62,100 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_verification']
         $updateQuery = "UPDATE pending_enrollments SET is_verified = 1 WHERE verification_token = ?";
         $updateStmt = $db->prepare($updateQuery);
         $updateStmt->execute([$token]);
+
+        // Create login account in users (role=student, active)
+        // Use email as username for consistency with old_student login
+        $userCheck = $db->prepare('SELECT id FROM users WHERE username = :u LIMIT 1');
+        $userCheck->execute([':u' => $row['email']]);
+        $user = $userCheck->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            $upd = $db->prepare('UPDATE users SET email = :e, role = "student", status = "active" WHERE id = :id');
+            $upd->execute([':e' => $row['email'], ':id' => $user['id']]);
+            if (!empty($row['password_hash'])) {
+                $updPw = $db->prepare('UPDATE users SET password = :p WHERE id = :id');
+                $updPw->execute([':p' => $row['password_hash'], ':id' => $user['id']]);
+            }
+            $userId = (int)$user['id'];
+        } else {
+            $ins = $db->prepare('INSERT INTO users (username, email, password, role, status) VALUES (:u, :e, :p, "student", "active")');
+            $ins->execute([':u' => $row['email'], ':e' => $row['email'], ':p' => $row['password_hash']]);
+            $userId = (int)$db->lastInsertId();
+        }
+
+        // Ensure minimal old_students record exists for dashboard compatibility
+        $oldCheck = $db->prepare('SELECT student_id FROM old_students WHERE username = :u LIMIT 1');
+        $oldCheck->execute([':u' => $row['email']]);
+        $old = $oldCheck->fetch(PDO::FETCH_ASSOC);
+
+        if (!$old) {
+            $studentId = date('Y') . '-' . str_pad((string)rand(1, 9999), 4, '0', STR_PAD_LEFT);
+            $insOld = $db->prepare('INSERT INTO old_students (
+                student_id, lastname, firstname, middlename, course, year_level, section,
+                current_semester, school_year, units_earned, gpa, status, email, lrn,
+                address, gender, date_of_birth, age, civil_status, contact_no,
+                last_school, school_address, strand, preferred_program, is_working,
+                employer, position, working_hours, preferred_schedule,
+                father_name, father_occupation, father_contact, num_brothers, family_income,
+                mother_name, mother_occupation, mother_contact, num_sisters,
+                guardian_name, guardian_contact, username, password
+            ) VALUES (
+                :student_id, :lastname, :firstname, :middlename, :course, :year_level, :section,
+                :current_semester, :school_year, :units_earned, :gpa, :status, :email, :lrn,
+                :address, :gender, :date_of_birth, :age, :civil_status, :contact_no,
+                :last_school, :school_address, :strand, :preferred_program, :is_working,
+                :employer, :position, :working_hours, :preferred_schedule,
+                :father_name, :father_occupation, :father_contact, :num_brothers, :family_income,
+                :mother_name, :mother_occupation, :mother_contact, :num_sisters,
+                :guardian_name, :guardian_contact, :username, :password
+            )');
+
+            $nowYear = (int)date('Y');
+            $insOld->execute([
+                ':student_id' => $studentId,
+                ':lastname' => $row['lastname'],
+                ':firstname' => $row['firstname'],
+                ':middlename' => $row['middlename'],
+                ':course' => $row['preferred_program'],
+                ':year_level' => 1,
+                ':section' => 'A',
+                ':current_semester' => 1,
+                ':school_year' => $nowYear . '-' . ($nowYear + 1),
+                ':units_earned' => 0,
+                ':gpa' => null,
+                ':status' => 'Regular',
+                ':email' => $row['email'],
+                ':lrn' => $row['lrn'],
+                ':address' => $row['address'],
+                ':gender' => $row['gender'],
+                ':date_of_birth' => $row['date_of_birth'],
+                ':age' => $row['age'],
+                ':civil_status' => $row['civil_status'],
+                ':contact_no' => $row['contact_no'],
+                ':last_school' => $row['last_school'],
+                ':school_address' => $row['school_address'],
+                ':strand' => $row['strand'],
+                ':preferred_program' => $row['preferred_program'],
+                ':is_working' => $row['is_working'],
+                ':employer' => $row['employer'],
+                ':position' => $row['position'],
+                ':working_hours' => $row['working_hours'],
+                ':preferred_schedule' => $row['preferred_schedule'],
+                ':father_name' => $row['father_name'],
+                ':father_occupation' => $row['father_occupation'],
+                ':father_contact' => $row['father_contact'],
+                ':num_brothers' => $row['num_brothers'],
+                ':family_income' => $row['family_income'],
+                ':mother_name' => $row['mother_name'],
+                ':mother_occupation' => $row['mother_occupation'],
+                ':mother_contact' => $row['mother_contact'],
+                ':num_sisters' => $row['num_sisters'],
+                ':guardian_name' => $row['guardian_name'],
+                ':guardian_contact' => $row['guardian_contact'],
+                ':username' => $row['email'],
+                ':password' => $row['password_hash']
+            ]);
+        }
         
         $message = "Your enrollment has been successfully verified! The registrar will review your application and schedule your entrance exam. You will receive an email notification once your exam is scheduled.";
         
